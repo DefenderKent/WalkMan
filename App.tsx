@@ -10,13 +10,17 @@
 
 import React from 'react';
 import {View, Text, StatusBar} from 'react-native';
-
+import {Provider} from 'react-redux';
+import {store} from './src/store';
 import {AppContainer} from './src/navigation/AppContainer';
 
 export const App: React.FC = () => {
   return (
     <>
-      <AppContainer />
+      <Provider store={store}>
+        <StatusBar barStyle={'dark-content'} backgroundColor={'white'} />
+        <AppContainer />
+      </Provider>
     </>
   );
 };
