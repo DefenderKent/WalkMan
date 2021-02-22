@@ -10,11 +10,13 @@
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx"
   },
   "dependencies": {
+    "@mapbox/mapbox-sdk": "^0.12.1",
     "@react-native-community/masked-view": "^0.1.10",
     "@react-native-mapbox-gl/maps": "^8.1.0",
     "@react-navigation/bottom-tabs": "^5.11.7",
     "@react-navigation/native": "^5.9.2",
     "@react-navigation/stack": "^5.14.2",
+    "@turf/helpers": "^6.3.0",
     "@turf/turf": "^6.3.0",
     "react": "16.13.1",
     "react-native": "0.63.4",
