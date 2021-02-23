@@ -1,1 +1,1 @@
-export {signIn, signOut, restoreToken, typeUser, isAuth} from './auth';
+export {restoreToken, setGeolocation} from './auth';

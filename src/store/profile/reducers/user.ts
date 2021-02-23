@@ -8,7 +8,7 @@ const initialState = {
     name: '',
     email: '',
     address: '',
-    location: '',
+    history: [],
   },
   isLoading: false,
 };
@@ -23,12 +23,12 @@ export const user: Reducer<userReducer, profileAction> = (
         ...state,
         user: action.user,
       };
-    case 'RECEIVE_USER_TYPE':
+    case 'UPDATE_MY_HISTORY':
       return {
         ...state,
         user: {
           ...state.user,
-          type: action.typeAcc,
+          history: [...state.user.history, action.history],
         },
       };
     case 'USER_IS_LOADING':

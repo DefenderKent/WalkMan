@@ -1,1 +1,1 @@
-export {receiveUser, receiveUserType, fetchUser} from './user';
+export {receiveUser, fetchUser, myHistory} from './user';

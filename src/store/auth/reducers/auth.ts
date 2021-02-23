@@ -3,10 +3,8 @@ import {authAction, authReducer} from '../types';
 
 const initialState = {
   isLoading: true,
-  isSignout: false,
   userToken: null,
-  typeAccount: '',
-  isAuth: false,
+  coordinates: [],
 };
 
 export const auth: Reducer<authReducer, authAction> = (
@@ -20,26 +18,11 @@ export const auth: Reducer<authReducer, authAction> = (
         userToken: action.token,
         isLoading: false,
       };
-    case 'ACCOUNT_TYPE':
+    case 'SET_COORDINATES':
       return {
         ...state,
-        typeAccount: action.typeAccount,
-      };
-    case 'IS_AUTH':
-      return {
-        ...state,
-        isAuth: action.isAuth,
-      };
-    case 'SIGN_IN':
-      return {
-        ...state,
-        isSignout: false,
-      };
-    case 'SIGN_OUT':
-      return {
-        ...state,
-        isSignout: true,
-        userToken: null,
+        coordinates: action.coordinates,
+        isLoading: false,
       };
 
     default:

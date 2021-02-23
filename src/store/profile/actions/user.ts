@@ -1,6 +1,6 @@
 import {Alert} from 'react-native';
 
-import {Account, AppThunk} from '../../types';
+import {Account, AppThunk, IMyHistory} from '../../types';
 
 export function receiveUser(user: Account) {
   return <const>{
@@ -8,23 +8,20 @@ export function receiveUser(user: Account) {
     user,
   };
 }
-export function receiveUserType(typeAcc: string) {
-  return <const>{
-    type: 'RECEIVE_USER_TYPE',
-    typeAcc,
+export const myHistory = (history: IMyHistory) =>
+  <const>{
+    type: 'UPDATE_MY_HISTORY',
+    history,
   };
-}
 export function userIsLoading(isLoading: boolean) {
   return <const>{
     type: 'USER_IS_LOADING',
     isLoading,
   };
 }
-
 export const fetchUser = (): AppThunk => async (dispatch) => {
   dispatch(userIsLoading(true));
   try {
-    // const data = await console.log("test1");
     dispatch(
       receiveUser({
         id: 1,
@@ -32,7 +29,13 @@ export const fetchUser = (): AppThunk => async (dispatch) => {
         name: 'Bob',
         email: 'bob@mqail.ru',
         address: 'testandress',
-        location: '1234',
+        history: [
+          {
+            waypoints: [{coordinates: [0]}],
+            profile: 'driving-traffic',
+            geometries: 'geojson',
+          },
+        ],
       }),
     );
   } catch (error) {
