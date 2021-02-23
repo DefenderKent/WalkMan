@@ -1,10 +1,10 @@
 import {Account} from '../types';
-import {receiveUser, receiveUserType, userIsLoading} from './actions/user';
+import {receiveUser, userIsLoading, myHistory} from './actions/user';
 
 export type profileAction =
   | ReturnType<typeof receiveUser>
-  | ReturnType<typeof userIsLoading>
-  | ReturnType<typeof receiveUserType>;
+  | ReturnType<typeof myHistory>
+  | ReturnType<typeof userIsLoading>;
 
 export type userReducer = {
   user: Account;

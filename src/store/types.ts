@@ -8,13 +8,21 @@ export interface IAction {
   type: string;
   payload: any;
 }
+export interface Icoordinates {
+  coordinates: number[];
+}
+export interface IMyHistory {
+  waypoints: Icoordinates[];
+  profile: string;
+  geometries: string;
+}
 export interface Account {
   id: number;
   typeAcc: string;
   name: string;
   email: string;
   address: string;
-  location: string;
+  history: IMyHistory[];
 }
 
 export type AppThunk<ReturnType = void> = ThunkAction<
