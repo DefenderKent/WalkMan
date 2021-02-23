@@ -1,0 +1,1 @@
+export {textApp} from './textApp';

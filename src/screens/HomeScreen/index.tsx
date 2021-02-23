@@ -1,24 +1,17 @@
 import {StackNavigationProp} from '@react-navigation/stack';
-import React, {useEffect, useRef, useState} from 'react';
-import {
-  SafeAreaView,
-  View,
-  Text,
-  StyleSheet,
-  ActivityIndicator,
-  Platform,
-  Image,
-  Pressable,
-} from 'react-native';
-import {useDispatch, useSelector} from 'react-redux';
-import MapboxGL from '@react-native-mapbox-gl/maps';
-import {lineString as makeLineString} from '@turf/helpers';
-
+import React, {useEffect, useState} from 'react';
+import {View} from 'react-native';
 import MapboxDirectionsFactory from '@mapbox/mapbox-sdk/services/directions';
+import {lineString as makeLineString} from '@turf/helpers';
+import MapboxGL from '@react-native-mapbox-gl/maps';
+import {useDispatch, useSelector} from 'react-redux';
+
 import {IRootRoute, RootStackParamList} from '../../navigation/interfaces';
 import {NavigationPages} from '../../navigation/pages';
-import {fetchUser} from '../../store/profile/actions';
 import {RootState} from '../../store/types';
+import {Colors, COMMON_STYLES} from '../../style';
+import {SaveTrack} from '../../containers/SaveTrack';
+import {Shared} from '../../containers/Shared';
 import {styles} from './style';
 
 interface IProps {
@@ -40,54 +33,51 @@ interface Coordinates {
 }
 
 export const HomeScreen: React.FC<IProps> = ({}) => {
+  const {coordinates} = useSelector((store: RootState) => store.auth);
   const accessToken =
     'pk.eyJ1IjoiZGVmZW5kZXJrZW50IiwiYSI6ImNrbGY1aXZuaTB6ZG0ycXA3N3RleHZndWkifQ._YyjfG_JCtG_r9EcnxRhYA';
   const directionsClient = MapboxDirectionsFactory({accessToken});
-  // const destinationPoint = [56.4916955344, 84.9482140289];
-  // const startingPoint = [56.4884295, 84.9480469];
-  const [locationFir, setFir] = useState([]);
-  const [locationLast, setLast] = useState([]);
-
-  const destinationPoint = locationFir.length
-    ? locationFir
-    : [84.9482140289, 56.4916955344];
-  const startingPoint = locationLast.length
-    ? locationLast
-    : [84.9480469, 56.4884295];
+  const [latitude, setLatitude] = useState([]);
+  const [longitude, setLongitude] = useState([]);
+  const destinationPoint = latitude.length ? latitude : [84.94807, 56.48849];
+  const startingPoint = longitude.length ? longitude : [84.94807, 56.48849];
   const [route, setRoute] = useState(null);
-
-  const [location, setLocation] = useState({});
-  const startDestinationPoints = [startingPoint, destinationPoint];
-
+  const [currentPoint, setCurrentPoint] = useState([]);
+  const [endPoint, setEndPoint] = useState([]);
   useEffect(() => {
+    setCurrentPoint(coordinates);
     fetchRoute();
-    // MapboxGL.locationManager.start();
-
-    // return (): void => {
-    //   MapboxGL.locationManager.stop();
-    // };
-  }, []);
-
+  }, [endPoint]);
   const fetchRoute = async () => {
-    const reqOptions = {
-      waypoints: [
-        {coordinates: startingPoint},
-        {coordinates: destinationPoint},
-      ],
-      profile: 'driving-traffic',
-      geometries: 'geojson',
-    };
+    try {
+      const reqOptions = {
+        waypoints: [{coordinates: currentPoint}, {coordinates: endPoint}],
+        profile: 'driving-traffic',
+        geometries: 'geojson',
+      };
 
-    const res = await directionsClient.getDirections(reqOptions).send();
+      const res = await directionsClient.getDirections(reqOptions).send();
+      const newRoute = makeLineString(res.body.routes[0].geometry.coordinates);
+      setLatitude(newRoute.geometry.coordinates[0]);
+      setLongitude(newRoute.geometry.coordinates[1]);
+      setRoute(newRoute);
+    } catch (error) {
+      console.log('error fetchRoute', error.message);
+    }
+  };
+  const onRegionDidChange = async (newRoute) => {
+    try {
+      setLatitude(newRoute.geometry.coordinates[1]);
+      setLongitude(newRoute.geometry.coordinates[0]);
 
-    const newRoute = makeLineString(res.body.routes[0].geometry.coordinates);
-    setRoute(newRoute);
+      setRoute(newRoute);
+    } catch (error) {
+      console.log('onRegionDidChange', error.message);
+    }
   };
 
-  console.log('newRoute?newRoute', route);
-
   const renderAnnotations = () => {
-    return startDestinationPoints.map((point, index) => (
+    return [startingPoint, destinationPoint].map((point, index) => (
       <MapboxGL.PointAnnotation
         key={`${index}-PointAnnotation`}
         id={`${index}-PointAnnotation`}
@@ -106,66 +96,46 @@ export const HomeScreen: React.FC<IProps> = ({}) => {
     ));
   };
 
-  const araTest = [];
   const onUserLocationUpdate = (location: Location) => {
-    setLocation(location);
+    if (location) {
+      setEndPoint([location.coords.longitude, location.coords.latitude]);
+    }
   };
 
-  console.log('location', location);
-  console.log('locationFir', locationFir);
-
-  console.log('locationLast', locationLast);
-
   return (
-    <View style={{flex: 1, height: '100%', width: '100%'}}>
+    <View style={COMMON_STYLES.screenContainer}>
       <MapboxGL.MapView
+        onRegionDidChange={(e) => onRegionDidChange(e)}
         styleURL={MapboxGL.StyleURL.Street}
         zoomLevel={14}
-        centerCoordinate={startingPoint}
+        centerCoordinate={currentPoint}
         style={{flex: 1}}>
         <MapboxGL.UserLocation
           visible={true}
           showsUserHeadingIndicator
-          minDisplacement={5}
+          minDisplacement={30}
           onUpdate={(e) => onUserLocationUpdate(e)}
         />
         <MapboxGL.Camera
           zoomLevel={14}
-          centerCoordinate={startingPoint}
+          centerCoordinate={currentPoint}
           animationMode={'flyTo'}
-          animationDuration={0}></MapboxGL.Camera>
-        {renderAnnotations()}
+          animationDuration={0}
+        />
         {route && (
-          <MapboxGL.ShapeSource id="shapeSource" shape={route}>
+          <MapboxGL.ShapeSource id="destination" shape={route}>
             <MapboxGL.LineLayer
               id="lineLayer"
-              style={{lineWidth: 5, lineJoin: 'bevel', lineColor: '#ff0000'}}
+              style={{lineWidth: 5, lineJoin: 'bevel', lineColor: Colors.red}}
             />
           </MapboxGL.ShapeSource>
         )}
+
+        {renderAnnotations()}
       </MapboxGL.MapView>
-      <View style={{height: 60}}>
-        <Pressable
-          style={{height: 25, backgroundColor: 'red'}}
-          onPress={() => {
-            const testar = [];
-            testar.push(location.coords.longitude);
-            testar.push(location.coords.latitude);
-            setFir(testar);
-            console.log('First', testar);
-          }}>
-          <Text>First</Text>
-        </Pressable>
-        <Pressable
-          style={{height: 25, backgroundColor: 'green'}}
-          onPress={() => {
-            const testar = [];
-            testar.push(location.coords.longitude);
-            testar.push(location.coords.latitude);
-            setLast(testar);
-          }}>
-          <Text>Last</Text>
-        </Pressable>
+      <View style={styles.buttonContainer}>
+        <SaveTrack currentPoint={currentPoint} endPoint={endPoint} />
+        <Shared />
       </View>
     </View>
   );
