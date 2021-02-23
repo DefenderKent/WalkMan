@@ -1,6 +1,6 @@
 export enum textApp {
   saveWay = 'Сохранить путь',
   waySaved = 'Путь добавлен в историю',
-  shared = 'Поделится',
+  shared = 'Поделиться',
   sharedTitle = 'Тут текст',
 }

@@ -8,3 +8,4 @@ yarn android</br>
 
 
 Walkman tracker
+![alt text](imagesscreen/HomePage.png "Описание будет тут")
