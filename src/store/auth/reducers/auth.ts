@@ -4,7 +4,7 @@ import {authAction, authReducer} from '../types';
 const initialState = {
   isLoading: true,
   userToken: null,
-  coordinates: [],
+  coordinates: null,
 };
 
 export const auth: Reducer<authReducer, authAction> = (

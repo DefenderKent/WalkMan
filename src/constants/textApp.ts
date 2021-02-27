@@ -3,4 +3,6 @@ export enum textApp {
   waySaved = 'Путь добавлен в историю',
   shared = 'Поделиться',
   sharedTitle = 'Тут текст',
+  pause = 'Пауза',
+  startTrekking = 'Запустить трекинг',
 }

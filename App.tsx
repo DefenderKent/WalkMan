@@ -8,15 +8,53 @@
  * @format
  */
 
-import React from 'react';
-import {StatusBar} from 'react-native';
-import {Provider} from 'react-redux';
-import {store} from './src/store';
+import React, {useEffect, useState} from 'react';
+import {PermissionsAndroid, StatusBar} from 'react-native';
+import {Provider, useDispatch} from 'react-redux';
 import {AppContainer} from './src/navigation/AppContainer';
-
+import Geolocation from 'react-native-geolocation-service';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 
+import {store} from './src/store';
+import {setGeolocation} from './src/store/auth/actions';
+
 export const App: React.FC = () => {
+  const [getPermission, setPermission] = useState(false);
+
+  const hasPermission = async () => {
+    try {
+      const granted = await PermissionsAndroid.request(
+        PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
+      );
+      if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+        setPermission(true);
+      } else {
+        //добавить акшен и потом вывести кнопку с зпросом на местоположение.
+      }
+    } catch (err) {
+      console.warn(err);
+    }
+  };
+
+  useEffect(() => {
+    hasPermission();
+    if (getPermission) {
+      return Geolocation.getCurrentPosition(
+        (position) => {
+          store.dispatch(
+            setGeolocation({
+              latitude: position.coords.latitude,
+              longitude: position.coords.longitude,
+            }),
+          );
+        },
+        (error) => {
+          console.log(error.code, error.message);
+        },
+        {enableHighAccuracy: true, timeout: 15000, maximumAge: 10000},
+      );
+    }
+  }, [getPermission, store.getState().auth.coordinates]);
   return (
     <Provider store={store}>
       <StatusBar barStyle={'dark-content'} backgroundColor={'white'} />

@@ -1,4 +1,6 @@
-export const setGeolocation = (coordinates: number[]) =>
+import {ICoordinates} from '../types';
+
+export const setGeolocation = (coordinates: ICoordinates) =>
   <const>{
     type: 'SET_COORDINATES',
     coordinates,

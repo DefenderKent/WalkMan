@@ -1,12 +1,10 @@
 import React from 'react';
 import {Pressable, View, Text} from 'react-native';
 
-import {Colors} from '../../style';
-
 import {styles} from './style';
 interface ShareButtonProps {
   title: string;
-  Icon: React.ReactElement;
+  Icon?: React.ReactElement;
   onPress: () => void;
 }
 

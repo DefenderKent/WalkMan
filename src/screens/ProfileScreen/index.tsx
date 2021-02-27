@@ -4,7 +4,6 @@ import {SafeAreaView, View, Text} from 'react-native';
 
 import {IRootRoute, RootStackParamList} from '../../navigation/interfaces';
 import {NavigationPages} from '../../navigation/pages';
-import {styles} from './style';
 
 interface IProps {
   navigation: StackNavigationProp<RootStackParamList>;

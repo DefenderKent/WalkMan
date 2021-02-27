@@ -11,20 +11,19 @@ export interface IAction {
 export interface Icoordinates {
   coordinates: number[];
 }
-export interface IMyHistory {
-  waypoints: Icoordinates[];
-  profile: string;
-  geometries: string;
-}
+
 export interface Account {
   id: number;
   typeAcc: string;
   name: string;
   email: string;
   address: string;
-  history: IMyHistory[];
+  history: ILocation[];
 }
-
+export interface ILocation {
+  latitude: number;
+  longitude: number;
+}
 export type AppThunk<ReturnType = void> = ThunkAction<
   ReturnType,
   RootState,

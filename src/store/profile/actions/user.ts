@@ -1,6 +1,6 @@
 import {Alert} from 'react-native';
 
-import {Account, AppThunk, IMyHistory} from '../../types';
+import {Account, AppThunk, ILocation} from '../../types';
 
 export function receiveUser(user: Account) {
   return <const>{
@@ -8,7 +8,7 @@ export function receiveUser(user: Account) {
     user,
   };
 }
-export const myHistory = (history: IMyHistory) =>
+export const myHistory = (history: ILocation[]) =>
   <const>{
     type: 'UPDATE_MY_HISTORY',
     history,
@@ -29,13 +29,7 @@ export const fetchUser = (): AppThunk => async (dispatch) => {
         name: 'Bob',
         email: 'bob@mqail.ru',
         address: 'testandress',
-        history: [
-          {
-            waypoints: [{coordinates: [0]}],
-            profile: 'driving-traffic',
-            geometries: 'geojson',
-          },
-        ],
+        history: [{latitude: 0, longitude: 0}],
       }),
     );
   } catch (error) {
