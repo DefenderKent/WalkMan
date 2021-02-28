@@ -33,7 +33,6 @@ interface Coordinates {
 export const MapScreen: React.FC<IProps> = ({route}) => {
   const itinerary = route.params?.item;
   const coordinates = useSelector((state: RootState) => state.auth.coordinates);
-  const APIKEY = 'AIzaSyCFQs_e6mCpzj0iTOecBqZFu8lWdnpPFCE';
   const [playMode, setPlayMode] = useState(false);
   const [locations, setLocations] = useState<Array<ILocation>>([]);
   let _watchId: number;
@@ -71,9 +70,9 @@ export const MapScreen: React.FC<IProps> = ({route}) => {
     };
   }, [locations, playMode, coordinates]);
 
-  console.log('locations', locations);
-  console.log('coordinates', coordinates);
-  console.log('itinerary', itinerary);
+  // console.log('locations', locations);
+  // console.log('coordinates', coordinates);
+  // console.log('itinerary', itinerary);
 
   return (
     <View style={{flex: 1}}>

@@ -5,4 +5,5 @@ export enum textApp {
   sharedTitle = 'Тут текст',
   pause = 'Пауза',
   startTrekking = 'Запустить трекинг',
+  emptyCoordinates = 'Координаты не могут быть пустыми',
 }

@@ -1,11 +1,12 @@
 import React from 'react';
 import Icon from 'react-native-vector-icons/Ionicons';
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 
 import {Button} from '../../components';
 import {textApp} from '../../constants';
 import {myHistory} from '../../store/profile/actions';
-import {ILocation} from '../../store/types';
+import {addMyHistory} from '../../store/profile/actions/user';
+import {ILocation, RootState} from '../../store/types';
 import {Colors} from '../../style';
 import {showLongToast} from '../../utils';
 
@@ -16,9 +17,10 @@ interface SaveTrackProps {
 export const SaveTrack: React.FC<SaveTrackProps> = ({locations}) => {
   const dispatch = useDispatch();
   const save = () => {
-    console.log('SaveTracklocations', locations);
-
-    dispatch(myHistory(locations));
+    if (!locations.length) {
+      return showLongToast(textApp.emptyCoordinates);
+    }
+    dispatch(addMyHistory(locations));
     showLongToast(textApp.waySaved);
   };
   return (

@@ -14,8 +14,9 @@ import {Provider, useDispatch} from 'react-redux';
 import {AppContainer} from './src/navigation/AppContainer';
 import Geolocation from 'react-native-geolocation-service';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
+import {PersistGate} from 'redux-persist/integration/react';
 
-import {store} from './src/store';
+import {persistor, store} from './src/store';
 import {setGeolocation} from './src/store/auth/actions';
 
 export const App: React.FC = () => {
@@ -35,7 +36,10 @@ export const App: React.FC = () => {
       console.warn(err);
     }
   };
-
+  // setGeolocation({
+  //   latitude: position.coords.latitude,
+  //   longitude: position.coords.longitude,
+  // })
   useEffect(() => {
     hasPermission();
     if (getPermission) {
@@ -59,7 +63,9 @@ export const App: React.FC = () => {
     <Provider store={store}>
       <StatusBar barStyle={'dark-content'} backgroundColor={'white'} />
       <SafeAreaProvider>
-        <AppContainer />
+        <PersistGate persistor={persistor}>
+          <AppContainer />
+        </PersistGate>
       </SafeAreaProvider>
     </Provider>
   );
