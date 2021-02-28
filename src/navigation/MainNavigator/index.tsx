@@ -4,7 +4,7 @@ import {createStackNavigator} from '@react-navigation/stack';
 
 import {RootStackParamList} from '../interfaces';
 import {NavigationPages} from '../pages';
-import {HomeScreen} from '../../screens';
+import {MapScreen} from '../../screens';
 import {Stack} from '../AppContainer';
 import {TabNavigator} from '../TabNavigator';
 

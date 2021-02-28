@@ -1,5 +1,6 @@
 export enum NavigationPages {
   home = 'home',
+  map = 'map',
   homeStack = 'homeStack',
   historyStack = 'historyStack',
   historyScreen = 'historyScreen',

@@ -18,7 +18,7 @@ export interface Account {
   name: string;
   email: string;
   address: string;
-  history: ILocation[];
+  history: Array<Array<ILocation>>;
 }
 export interface ILocation {
   latitude: number;

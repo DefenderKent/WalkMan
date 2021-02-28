@@ -2,12 +2,13 @@
 import React from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 
-import {HistoryScreen, HomeScreen, ProfileScreen} from '../../screens';
+import {MapScreen, HistoryScreen, ProfileScreen} from '../../screens';
 import {TabPages} from '../pages';
 
 import {Colors} from '../../style';
 import Icon from 'react-native-vector-icons/Ionicons';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import {HistoryStack} from '../HistoryStack';
 
 const Tab = createBottomTabNavigator();
 
@@ -15,7 +16,7 @@ export const TabNavigator = () => {
   return (
     <Tab.Navigator tabBarOptions={{style: {backgroundColor: Colors.lightGrey}}}>
       <Tab.Screen
-        component={HomeScreen}
+        component={MapScreen}
         name={TabPages.tabHome}
         options={{
           tabBarIcon: ({focused}) =>
@@ -27,7 +28,7 @@ export const TabNavigator = () => {
         }}
       />
       <Tab.Screen
-        component={HistoryScreen}
+        component={HistoryStack}
         name={TabPages.historyTab}
         options={{
           tabBarIcon: ({focused}) => (

@@ -14,7 +14,7 @@ import {ILocation, RootState} from '../../store/types';
 
 interface IProps {
   navigation: StackNavigationProp<RootStackParamList>;
-  route: IRootRoute<NavigationPages.home>;
+  route: IRootRoute<NavigationPages.map>;
 }
 interface Location {
   coords: Coordinates;
@@ -30,28 +30,12 @@ interface Coordinates {
   altitude?: number;
 }
 
-export const HomeScreen: React.FC<IProps> = ({}) => {
-  const {width, height} = Dimensions.get('window');
+export const MapScreen: React.FC<IProps> = ({route}) => {
+  const itinerary = route.params?.item;
   const coordinates = useSelector((state: RootState) => state.auth.coordinates);
-  const ASPECT_RATIO = width / height;
-  const LATITUDE = 56.4884295;
-  const LONGITUDE = 84.9480469;
-  const LATITUDE_DELTA = 0.0922;
-  const LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO;
   const APIKEY = 'AIzaSyCFQs_e6mCpzj0iTOecBqZFu8lWdnpPFCE';
-  const [latitudeDelta, seLatitudeDelta] = useState(LATITUDE_DELTA);
-  const [longitudeDelta, seLongitudeDelta] = useState(LONGITUDE_DELTA);
-  const [origin, setOrigin] = useState({
-    latitude: 37.420814,
-    longitude: -118.44963,
-  });
-  const [endPos, setEndPos] = useState({latitude: 56.4868, longitude: 84.9484});
-  const [editing, setEditing] = useState(null);
-
   const [playMode, setPlayMode] = useState(false);
-
   const [locations, setLocations] = useState<Array<ILocation>>([]);
-  const dispatch = useDispatch();
   let _watchId: number;
   useEffect(() => {
     console.log('playMode', playMode);
@@ -89,6 +73,7 @@ export const HomeScreen: React.FC<IProps> = ({}) => {
 
   console.log('locations', locations);
   console.log('coordinates', coordinates);
+  console.log('itinerary', itinerary);
 
   return (
     <View style={{flex: 1}}>
@@ -117,6 +102,13 @@ export const HomeScreen: React.FC<IProps> = ({}) => {
           {locations && (
             <Polyline
               coordinates={locations}
+              strokeColor={'#008500'}
+              strokeWidth={6}
+            />
+          )}
+          {itinerary && (
+            <Polyline
+              coordinates={itinerary}
               strokeColor={'#008500'}
               strokeWidth={6}
             />
