@@ -9,6 +9,8 @@ import {Colors} from '../../style';
 import Icon from 'react-native-vector-icons/Ionicons';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import {HistoryStack} from '../HistoryStack';
+import {FriendScreen} from '../../screens/FriendScreen';
+import {FriendStack} from '../FriendStack';
 
 const Tab = createBottomTabNavigator();
 
@@ -21,9 +23,9 @@ export const TabNavigator = () => {
         options={{
           tabBarIcon: ({focused}) =>
             focused ? (
-              <Icon name="md-home" color={Colors.aqua} size={25} />
+              <Icon name="md-home" color={Colors.blueApp} size={25} />
             ) : (
-              <Icon name="md-home-outline" color={Colors.aqua} size={25} />
+              <Icon name="md-home-outline" color={Colors.blueApp} size={25} />
             ),
         }}
       />
@@ -32,8 +34,24 @@ export const TabNavigator = () => {
         name={TabPages.historyTab}
         options={{
           tabBarIcon: ({focused}) => (
-            <MaterialIcons name="history" color={Colors.aqua} size={25} />
+            <MaterialIcons name="history" color={Colors.blueApp} size={25} />
           ),
+        }}
+      />
+      <Tab.Screen
+        component={FriendStack}
+        name={TabPages.friendTab}
+        options={{
+          tabBarIcon: ({focused}) =>
+            focused ? (
+              <MaterialIcons name="people" color={Colors.blueApp} size={25} />
+            ) : (
+              <MaterialIcons
+                name="people-outline"
+                color={Colors.blueApp}
+                size={25}
+              />
+            ),
         }}
       />
       <Tab.Screen
@@ -42,11 +60,11 @@ export const TabNavigator = () => {
         options={{
           tabBarIcon: ({focused}) =>
             focused ? (
-              <MaterialIcons name="person" color={Colors.aqua} size={25} />
+              <MaterialIcons name="person" color={Colors.blueApp} size={25} />
             ) : (
               <MaterialIcons
                 name="person-outline"
-                color={Colors.aqua}
+                color={Colors.blueApp}
                 size={25}
               />
             ),

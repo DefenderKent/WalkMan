@@ -13,6 +13,9 @@ export const styles = StyleSheet.create({
     margin: 4,
     borderColor: Colors.blueApp,
   },
+  wrap: {
+    paddingVertical: 8,
+  },
   title: {
     color: Colors.blueApp,
     marginLeft: 10,

@@ -15,6 +15,10 @@ export type RootStackParamList = {
   [NavigationPages.profileStack]: undefined;
   [NavigationPages.historyScreen]: undefined;
   [NavigationPages.historyStack]: undefined;
+  [NavigationPages.friendScreen]: undefined;
+  [NavigationPages.friendStack]: undefined;
+  [NavigationPages.modal]: {Body: React.FC; title: string};
+
   [NavigationPages.map]: {item?: IAdress[]};
 };
 export type IRootNavigation<P extends NavigationPages> = StackNavigationProp<
@@ -29,6 +33,7 @@ export type IRootRoute<P extends NavigationPages> = RouteProp<
 export type MainTabParamList = {
   [TabPages.tabHome]: {};
   [TabPages.historyTab]: {};
+  [TabPages.friendTab]: {};
   [TabPages.profileTab]: {};
 };
 

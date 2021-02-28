@@ -26,7 +26,7 @@ export const SaveTrack: React.FC<SaveTrackProps> = ({locations}) => {
   return (
     <Button
       title={textApp.saveWay}
-      Icon={<Icon name="ios-save-outline" color={Colors.aqua} size={25} />}
+      Icon={<Icon name="ios-save-outline" color={Colors.blueApp} size={25} />}
       onPress={save}
     />
   );

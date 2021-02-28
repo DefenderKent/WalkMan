@@ -6,4 +6,8 @@ export enum textApp {
   pause = 'Пауза',
   startTrekking = 'Запустить трекинг',
   emptyCoordinates = 'Координаты не могут быть пустыми',
+  successfullyExported = 'Успешно экспротировано!',
+  errorExported = 'Ошибка экспрота!',
+  successImport = 'Успешно импортировано!',
+  errorImport = 'Ошибка импорта!',
 }

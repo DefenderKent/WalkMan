@@ -15,9 +15,14 @@ export const COMMON_STYLES = StyleSheet.create({
   title: {
     fontSize: 18,
     lineHeight: 18,
-    fontWeight: 'bold',
   },
   componentContainer: {
     paddingHorizontal: 16,
+  },
+  modalContainer: {
+    marginHorizontal: 16,
+    paddingHorizontal: 16,
+    backgroundColor: '#fff',
+    borderRadius: 4,
   },
 });

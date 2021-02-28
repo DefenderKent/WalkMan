@@ -16,7 +16,9 @@ export const StartTrekking: React.FC<StartTrekkingProps> = ({setPlayMode}) => {
   return (
     <Button
       title={textApp.startTrekking}
-      Icon={<Icon name="play-circle-outline" color={Colors.aqua} size={25} />}
+      Icon={
+        <Icon name="play-circle-outline" color={Colors.blueApp} size={25} />
+      }
       onPress={startTrekking}
     />
   );

@@ -24,7 +24,11 @@ export const Shared: React.FC<ButtonProps> = () => {
     <Button
       title={textApp.shared}
       Icon={
-        <Icon name="ios-share-social-outline" color={Colors.aqua} size={25} />
+        <Icon
+          name="ios-share-social-outline"
+          color={Colors.blueApp}
+          size={25}
+        />
       }
       onPress={onShare}
     />

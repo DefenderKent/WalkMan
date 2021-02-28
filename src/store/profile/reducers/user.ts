@@ -8,6 +8,7 @@ const initialState = {
     name: '',
     email: '',
     address: '',
+    exportHistory: [],
     history: [],
   },
   isLoading: false,
@@ -22,6 +23,22 @@ export const user: Reducer<userReducer, profileAction> = (
       return {
         ...state,
         user: action.user,
+      };
+    case 'SET_NAME':
+      return {
+        ...state,
+        user: {
+          ...state.user,
+          name: action.name,
+        },
+      };
+    case 'EXPORT_HISTORY':
+      return {
+        ...state,
+        user: {
+          ...state.user,
+          exportHistory: [...state.user.exportHistory, action.history],
+        },
       };
     case 'UPDATE_MY_HISTORY':
       return {

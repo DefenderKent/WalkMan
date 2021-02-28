@@ -8,7 +8,7 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
   },
   title: {
-    color: Colors.aqua,
+    color: Colors.blueApp,
     marginLeft: 10,
   },
 });

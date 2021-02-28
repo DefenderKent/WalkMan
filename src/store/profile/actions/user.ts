@@ -1,21 +1,39 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {Alert} from 'react-native';
 import {getAddressFromCoordinates} from '../../../api';
-import {storageKeys} from '../../../constants';
+import {storageKeys, textApp} from '../../../constants';
+import {showLongToast} from '../../../utils/showLongToast';
 
-import {Account, AppThunk, IAdress, ILocation} from '../../types';
+import {
+  AccountUser,
+  AppThunk,
+  IAdress,
+  ILocation,
+  ImportHistory,
+} from '../../types';
 
-export function receiveUser(user: Account) {
+export function receiveUser(user: AccountUser) {
   return <const>{
     type: 'RECEIVE_USER',
     user,
   };
 }
+export const setName = (name: string) =>
+  <const>{
+    type: 'SET_NAME',
+    name,
+  };
 export const myHistory = (history: IAdress) =>
   <const>{
     type: 'UPDATE_MY_HISTORY',
     history,
   };
+export const exportHistory = (history: ImportHistory) =>
+  <const>{
+    type: 'EXPORT_HISTORY',
+    history,
+  };
+
 export const delHistory = (id: number) =>
   <const>{
     type: 'DEL_HISTORY',
@@ -37,6 +55,7 @@ export const fetchUser = (): AppThunk => async (dispatch) => {
         name: 'Bob',
         email: 'bob@mqail.ru',
         address: 'testandress',
+        exportHistory: [],
         history: [],
       }),
     );
@@ -49,6 +68,7 @@ export const fetchUser = (): AppThunk => async (dispatch) => {
 export const addMyHistory = (history: Array<ILocation>): AppThunk => async (
   dispatch,
 ) => {
+  dispatch(userIsLoading(true));
   try {
     console.log('addMyhistory', history);
 
@@ -65,4 +85,18 @@ export const addMyHistory = (history: Array<ILocation>): AppThunk => async (
   } catch (error) {
     Alert.alert('addMyHistory', error.message);
   }
+  dispatch(userIsLoading(false));
+};
+export const addExportHistory = (history: any): AppThunk => async (
+  dispatch,
+) => {
+  dispatch(userIsLoading(true));
+  try {
+    dispatch(exportHistory(history));
+    showLongToast(textApp.successfullyExported);
+  } catch (error) {
+    Alert.alert('addMyHistory', error.message);
+    showLongToast(textApp.errorExported);
+  }
+  dispatch(userIsLoading(false));
 };

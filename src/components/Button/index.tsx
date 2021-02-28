@@ -2,13 +2,13 @@ import React from 'react';
 import {Pressable, View, Text} from 'react-native';
 
 import {styles} from './style';
-interface ShareButtonProps {
+interface ButtonProps {
   title?: string;
   Icon?: React.ReactElement;
   onPress: () => void;
 }
 
-export const Button: React.FC<ShareButtonProps> = ({Icon, title, onPress}) => {
+export const Button: React.FC<ButtonProps> = ({Icon, title, onPress}) => {
   return (
     <Pressable onPress={onPress}>
       {({pressed}) => (

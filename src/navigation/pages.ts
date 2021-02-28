@@ -6,9 +6,13 @@ export enum NavigationPages {
   historyScreen = 'historyScreen',
   profileStack = 'profileStack',
   profileScreen = 'profileScreen',
+  friendStack = 'friendStack',
+  friendScreen = 'friendScreen',
+  modal = 'modal',
 }
 export enum TabPages {
   tabHome = 'tabHome',
   historyTab = 'historyTab',
+  friendTab = 'friendTab',
   profileTab = 'profileTab',
 }

@@ -24,7 +24,9 @@ export const StopTrekking: React.FC<StopTrekkingProps> = ({
   return (
     <Button
       title={textApp.pause}
-      Icon={<Icon name="pause-circle-outline" color={Colors.aqua} size={25} />}
+      Icon={
+        <Icon name="pause-circle-outline" color={Colors.blueApp} size={25} />
+      }
       onPress={startTrekking}
     />
   );

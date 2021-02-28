@@ -18,6 +18,8 @@ import {PersistGate} from 'redux-persist/integration/react';
 
 import {persistor, store} from './src/store';
 import {setGeolocation} from './src/store/auth/actions';
+import {fetchFriend} from './src/store/profile/actions/friend';
+import {setName} from './src/store/profile/actions/user';
 
 export const App: React.FC = () => {
   const [getPermission, setPermission] = useState(false);
@@ -36,12 +38,11 @@ export const App: React.FC = () => {
       console.warn(err);
     }
   };
-  // setGeolocation({
-  //   latitude: position.coords.latitude,
-  //   longitude: position.coords.longitude,
-  // })
   useEffect(() => {
     hasPermission();
+    store.dispatch(fetchFriend());
+    store.dispatch(setName('Tomy'));
+
     if (getPermission) {
       return Geolocation.getCurrentPosition(
         (position) => {

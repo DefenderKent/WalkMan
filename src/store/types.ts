@@ -20,6 +20,9 @@ export interface Account {
   address: string;
   history: Array<IAdress>;
 }
+export interface AccountUser extends Account {
+  exportHistory: Array<ImportHistory>;
+}
 export interface ILocation {
   latitude: number;
   longitude: number;
@@ -28,6 +31,10 @@ export interface IAdress {
   name: string;
   history: ILocation[];
 }
+export interface ImportHistory extends IAdress {
+  owner: string;
+}
+
 export type AppThunk<ReturnType = void> = ThunkAction<
   ReturnType,
   RootState,
