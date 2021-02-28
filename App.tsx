@@ -9,8 +9,8 @@
  */
 
 import React, {useEffect, useState} from 'react';
-import {PermissionsAndroid, StatusBar} from 'react-native';
-import {Provider, useDispatch} from 'react-redux';
+import {PermissionsAndroid} from 'react-native';
+import {Provider} from 'react-redux';
 import {AppContainer} from './src/navigation/AppContainer';
 import Geolocation from 'react-native-geolocation-service';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
@@ -31,11 +31,9 @@ export const App: React.FC = () => {
       );
       if (granted === PermissionsAndroid.RESULTS.GRANTED) {
         setPermission(true);
-      } else {
-        //добавить акшен и потом вывести кнопку с зпросом на местоположение.
       }
     } catch (err) {
-      console.warn(err);
+      console.log(err);
     }
   };
   useEffect(() => {
@@ -53,16 +51,18 @@ export const App: React.FC = () => {
             }),
           );
         },
+
         (error) => {
           console.log(error.code, error.message);
         },
         {enableHighAccuracy: true, timeout: 15000, maximumAge: 10000},
       );
+    } else {
+      hasPermission();
     }
-  }, [getPermission, store.getState().auth.coordinates]);
+  }, [getPermission]);
   return (
     <Provider store={store}>
-      <StatusBar barStyle={'dark-content'} backgroundColor={'white'} />
       <SafeAreaProvider>
         <PersistGate persistor={persistor}>
           <AppContainer />

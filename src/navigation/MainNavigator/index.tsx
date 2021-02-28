@@ -1,18 +1,19 @@
 /* eslint-disable react/no-children-prop */
 import React from 'react';
-import {createStackNavigator} from '@react-navigation/stack';
 
-import {RootStackParamList} from '../interfaces';
 import {NavigationPages} from '../pages';
-import {MapScreen} from '../../screens';
 import {Stack} from '../AppContainer';
 import {TabNavigator} from '../TabNavigator';
 
-interface IProps {}
-
 export const MainNavigator = () => {
   return (
-    <Stack.Navigator>
+    <Stack.Navigator
+      screenOptions={{
+        cardStyle: {backgroundColor: '#fff'},
+        header: () => null,
+        headerTitle: 'AboutScreen',
+        headerTitleAlign: 'center',
+      }}>
       <Stack.Screen name={NavigationPages.home} component={TabNavigator} />
     </Stack.Navigator>
   );

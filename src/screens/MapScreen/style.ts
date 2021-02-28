@@ -1,5 +1,4 @@
 import {StyleSheet} from 'react-native';
-import {Colors, COMMON_STYLES} from '../../style';
 
 export const styles = StyleSheet.create({
   container: {
@@ -18,4 +17,5 @@ export const styles = StyleSheet.create({
     right: 0,
     bottom: 0,
   },
+  buttonContainer: {},
 });

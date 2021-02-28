@@ -1,8 +1,11 @@
 export enum textApp {
+  address = 'Адресс маршрута:',
+  nickname = 'Мое имя',
   saveWay = 'Сохранить путь',
   waySaved = 'Путь добавлен в историю',
   shared = 'Поделиться',
   sharedTitle = 'Тут текст',
+  saveRoute = 'Сохраненные маршруты:',
   pause = 'Пауза',
   startTrekking = 'Запустить трекинг',
   emptyCoordinates = 'Координаты не могут быть пустыми',
@@ -10,4 +13,10 @@ export enum textApp {
   errorExported = 'Ошибка экспрота!',
   successImport = 'Успешно импортировано!',
   errorImport = 'Ошибка импорта!',
+  exportedRouter = 'Экспортировать маршрут',
+  friends = 'Друзья',
+  history = 'История',
+  profile = 'Профиль',
+  sendRoute = 'Отправить свой маршрут',
+  pickRoute = 'Выберите маршрут',
 }

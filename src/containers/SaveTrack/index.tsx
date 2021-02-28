@@ -1,12 +1,11 @@
 import React from 'react';
 import Icon from 'react-native-vector-icons/Ionicons';
-import {useDispatch, useSelector} from 'react-redux';
 
+import {useDispatch} from 'react-redux';
 import {Button} from '../../components';
 import {textApp} from '../../constants';
-import {myHistory} from '../../store/profile/actions';
 import {addMyHistory} from '../../store/profile/actions/user';
-import {ILocation, RootState} from '../../store/types';
+import {ILocation} from '../../store/types';
 import {Colors} from '../../style';
 import {showLongToast} from '../../utils';
 
@@ -25,6 +24,7 @@ export const SaveTrack: React.FC<SaveTrackProps> = ({locations}) => {
   };
   return (
     <Button
+      small
       title={textApp.saveWay}
       Icon={<Icon name="ios-save-outline" color={Colors.blueApp} size={25} />}
       onPress={save}

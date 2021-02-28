@@ -1,16 +1,15 @@
 /* eslint-disable react/display-name */
 import React from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-
-import {MapScreen, HistoryScreen, ProfileScreen} from '../../screens';
-import {TabPages} from '../pages';
-
-import {Colors} from '../../style';
-import Icon from 'react-native-vector-icons/Ionicons';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import Icon from 'react-native-vector-icons/Ionicons';
+
+import {MapScreen} from '../../screens';
+import {TabPages} from '../pages';
+import {Colors} from '../../style';
 import {HistoryStack} from '../HistoryStack';
-import {FriendScreen} from '../../screens/FriendScreen';
 import {FriendStack} from '../FriendStack';
+import {ProfileStack} from '../ProfileStack';
 
 const Tab = createBottomTabNavigator();
 
@@ -55,7 +54,7 @@ export const TabNavigator = () => {
         }}
       />
       <Tab.Screen
-        component={ProfileScreen}
+        component={ProfileStack}
         name={TabPages.profileTab}
         options={{
           tabBarIcon: ({focused}) =>

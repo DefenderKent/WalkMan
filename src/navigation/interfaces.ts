@@ -6,7 +6,7 @@ import {
 import {StackNavigationProp} from '@react-navigation/stack';
 import {BottomTabNavigationProp} from '@react-navigation/bottom-tabs';
 import {NavigationPages, TabPages} from './pages';
-import {IAdress, ILocation} from '../store/types';
+import {IAdress} from '../store/types';
 
 export type RootStackParamList = {
   [NavigationPages.home]: undefined;
@@ -19,7 +19,7 @@ export type RootStackParamList = {
   [NavigationPages.friendStack]: undefined;
   [NavigationPages.modal]: {Body: React.FC; title: string};
 
-  [NavigationPages.map]: {item?: IAdress[]};
+  [NavigationPages.map]: {item?: IAdress};
 };
 export type IRootNavigation<P extends NavigationPages> = StackNavigationProp<
   RootStackParamList,

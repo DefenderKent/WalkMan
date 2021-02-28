@@ -1,15 +1,19 @@
 import {useNavigation} from '@react-navigation/core';
 import {StackNavigationProp} from '@react-navigation/stack';
 import React from 'react';
-import {SafeAreaView, View, Text, FlatList, Pressable} from 'react-native';
+import {SafeAreaView, View, FlatList} from 'react-native';
+import Icon from 'react-native-vector-icons/Ionicons';
 import {useDispatch, useSelector} from 'react-redux';
-import {Button, Modal} from '../../components';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
+import {AvatarBody, Button, Header, Modal, RenderItem} from '../../components';
+import {textApp} from '../../constants';
 import {IRootRoute, RootStackParamList} from '../../navigation/interfaces';
 import {NavigationPages} from '../../navigation/pages';
-import {addImportHistory} from '../../store/profile/actions/friend';
 import {addExportHistory} from '../../store/profile/actions/user';
 import {RootState} from '../../store/types';
+import {Colors} from '../../style';
+import {COMMON_STYLES} from '../../style/globalStyles';
 
 interface IProps {
   navigation: StackNavigationProp<RootStackParamList>;
@@ -25,32 +29,34 @@ export const FriendScreen: React.FC<IProps> = ({route}) => {
   const {navigate} = useNavigation();
   const dispatch = useDispatch();
   return (
-    <SafeAreaView style={{flex: 1}}>
-      <View>
-        <Text>имя {name}</Text>
-      </View>
+    <SafeAreaView
+      style={[COMMON_STYLES.componentContainer, COMMON_STYLES.screenContainer]}>
+      <Header title={textApp.friends} />
 
+      <AvatarBody
+        Icon={<MaterialIcons name="person" color={Colors.blueApp} size={64} />}
+        name={name}
+      />
       <FlatList
         keyExtractor={(item, index) => `history-${item.name}-${index}`}
         data={history}
         renderItem={({item, index}) => {
           return (
-            <View>
-              <Pressable
-                onPress={() => {
-                  navigate(NavigationPages.map, {item});
-                }}
-                key={index}>
-                <Text>{`Маршрут №${index + 1}`}</Text>
-                <View>
-                  <View>
-                    <Text>Название</Text>
-                    <Text>{item.name}</Text>
-                  </View>
-                </View>
-              </Pressable>
+            <View style={COMMON_STYLES.renderItem}>
+              <RenderItem
+                item={item}
+                index={index}
+                onPress={() => navigate(NavigationPages.map, {item})}
+              />
               <Button
-                title={'Экспортировать маршрут'}
+                title={textApp.exportedRouter}
+                Icon={
+                  <Icon
+                    name="ios-save-outline"
+                    color={Colors.blueApp}
+                    size={25}
+                  />
+                }
                 onPress={() => {
                   dispatch(
                     addExportHistory({
@@ -67,16 +73,18 @@ export const FriendScreen: React.FC<IProps> = ({route}) => {
       />
       <View>
         <Button
-          title={'Отправить свой маршрут'}
+          Icon={
+            <Icon
+              name="ios-share-social-outline"
+              color={Colors.blueApp}
+              size={25}
+            />
+          }
+          title={textApp.sendRoute}
           onPress={() => {
             navigate(NavigationPages.modal, {
-              Body: (
-                <Modal
-                  myHistory={myHistory}
-                  onPress={() => console.log('12')}
-                />
-              ),
-              title: 'Выберете маршрут',
+              Body: <Modal myHistory={myHistory} />,
+              title: textApp.pickRoute,
             });
           }}
         />

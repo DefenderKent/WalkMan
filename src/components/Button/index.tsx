@@ -6,14 +6,20 @@ interface ButtonProps {
   title?: string;
   Icon?: React.ReactElement;
   onPress: () => void;
+  small?: boolean;
 }
 
-export const Button: React.FC<ButtonProps> = ({Icon, title, onPress}) => {
+export const Button: React.FC<ButtonProps> = ({
+  Icon,
+  title,
+  onPress,
+  small,
+}) => {
   return (
-    <Pressable onPress={onPress}>
+    <Pressable style={{alignItems: 'center'}} onPress={onPress}>
       {({pressed}) => (
         <>
-          <View style={styles.container}>
+          <View style={[styles.container, small && {width: 180, height: 40}]}>
             {Icon}
             <Text style={styles.title}>{title}</Text>
           </View>

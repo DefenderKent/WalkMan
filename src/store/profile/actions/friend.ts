@@ -34,7 +34,10 @@ export const fetchFriend = (): AppThunk => async (dispatch) => {
         email: 'bob@mqail.ru',
         address: 'testandress',
         history: [
-          {name: 'BobTEST', history: testRoute},
+          {
+            name: 'улица Кузнечный Взвоз 10, Томск, Россия, 634003',
+            history: testRoute,
+          },
           {name: 'TestAdress 1/2', history: testRoute},
         ],
       }),
@@ -45,15 +48,6 @@ export const fetchFriend = (): AppThunk => async (dispatch) => {
   dispatch(friendIsLoading(false));
 };
 
-export const addMyHistory = (history: Array<ILocation>): AppThunk => async (
-  dispatch,
-) => {
-  try {
-    console.log('addMyhistory', history);
-  } catch (error) {
-    Alert.alert('addMyHistory', error.message);
-  }
-};
 export const addImportHistory = (history: any): AppThunk => async (
   dispatch,
 ) => {

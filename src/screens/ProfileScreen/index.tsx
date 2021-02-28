@@ -1,60 +1,56 @@
 import {useNavigation} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
 import React from 'react';
-import {SafeAreaView, View, Text, FlatList, Pressable} from 'react-native';
-import {useDispatch, useSelector} from 'react-redux';
+import {SafeAreaView, View, Text, FlatList} from 'react-native';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import {useSelector} from 'react-redux';
 
+import {AvatarBody, Header, RenderItem} from '../../components';
+import {textApp} from '../../constants';
 import {IRootRoute, RootStackParamList} from '../../navigation/interfaces';
 import {NavigationPages} from '../../navigation/pages';
 import {RootState} from '../../store/types';
+import {Colors, COMMON_STYLES} from '../../style';
 
-interface IProps {
-  navigation: StackNavigationProp<RootStackParamList>;
-  route: IRootRoute<NavigationPages.home>;
-}
-export const ProfileScreen: React.FC<IProps> = ({route}) => {
+export const ProfileScreen: React.FC = ({}) => {
   const {name, exportHistory} = useSelector(
     (state: RootState) => state.profile.user.user,
   );
   const {navigate} = useNavigation();
-  const dispatch = useDispatch();
   console.log('exportHistory', exportHistory);
 
   return (
-    <SafeAreaView style={{flex: 1}}>
+    <SafeAreaView
+      style={[COMMON_STYLES.componentContainer, COMMON_STYLES.screenContainer]}>
+      <Header title={textApp.profile} />
+      <AvatarBody
+        name={name}
+        Icon={<MaterialIcons name="person" color={Colors.blueApp} size={64} />}
+      />
       <View>
-        <Text>Имя:{name}</Text>
-      </View>
-      <View>
-        <Text>Сохраненные маршруты</Text>
+        <Text style={[COMMON_STYLES.sybTitle, {marginBottom: 8}]}>
+          {textApp.saveRoute}
+        </Text>
         {exportHistory.length ? (
-          <View>
-            <FlatList
-              keyExtractor={(item, index) => `history-${item.name}-${index}`}
-              data={exportHistory}
-              renderItem={({item, index}) => {
-                return (
-                  <View>
-                    <Pressable
-                      onPress={() => {
-                        navigate(NavigationPages.map, {item});
-                      }}
-                      key={index}>
-                      <Text>{`Маршрут №${index + 1}`}</Text>
-                      <View>
-                        <View>
-                          <Text>Название</Text>
-                          <Text>{item.name}</Text>
-                        </View>
-                      </View>
-                    </Pressable>
-                  </View>
-                );
-              }}
-            />
-          </View>
+          <FlatList
+            keyExtractor={(item, index) => `history-${item.name}-${index}`}
+            data={exportHistory}
+            renderItem={({item, index}) => {
+              return (
+                <View style={COMMON_STYLES.renderItem}>
+                  <RenderItem
+                    item={item}
+                    index={index}
+                    onPress={() => navigate(NavigationPages.map, {item})}
+                  />
+                </View>
+              );
+            }}
+          />
         ) : (
-          <Text>Empty</Text>
+          <Text style={{textAlign: 'center', fontSize: 20}}>
+            Список пока пуст!
+          </Text>
         )}
       </View>
     </SafeAreaView>

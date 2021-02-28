@@ -16,8 +16,19 @@ export const COMMON_STYLES = StyleSheet.create({
     fontSize: 18,
     lineHeight: 18,
   },
+  sybTitle: {
+    fontSize: 16,
+    lineHeight: 16,
+  },
   componentContainer: {
     paddingHorizontal: 16,
+  },
+  renderItem: {
+    padding: 16,
+    marginBottom: 8,
+    borderRadius: 8,
+    borderWidth: 1,
+    borderColor: Colors.blueApp,
   },
   modalContainer: {
     marginHorizontal: 16,

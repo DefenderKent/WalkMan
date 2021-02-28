@@ -1,6 +1,6 @@
 import {StackNavigationProp} from '@react-navigation/stack';
 import React, {useEffect, useState} from 'react';
-import {Dimensions, View} from 'react-native';
+import {View} from 'react-native';
 import MapView, {Polyline, Marker} from 'react-native-maps';
 import Geolocation from 'react-native-geolocation-service';
 
@@ -8,26 +8,13 @@ import {IRootRoute, RootStackParamList} from '../../navigation/interfaces';
 import {NavigationPages} from '../../navigation/pages';
 import {styles} from './style';
 import {SaveTrack, StartTrekking, StopTrekking} from '../../containers';
-import {Button} from '../../components';
-import {useDispatch, useSelector} from 'react-redux';
+import {Button, Header} from '../../components';
+import {useSelector} from 'react-redux';
 import {ILocation, RootState} from '../../store/types';
 
 interface IProps {
   navigation: StackNavigationProp<RootStackParamList>;
   route: IRootRoute<NavigationPages.map>;
-}
-interface Location {
-  coords: Coordinates;
-  timestamp?: number;
-}
-
-interface Coordinates {
-  heading?: number;
-  speed?: number;
-  latitude: number;
-  longitude: number;
-  accuracy?: number;
-  altitude?: number;
 }
 
 export const MapScreen: React.FC<IProps> = ({route}) => {
@@ -35,15 +22,15 @@ export const MapScreen: React.FC<IProps> = ({route}) => {
   const coordinates = useSelector((state: RootState) => state.auth.coordinates);
   const [playMode, setPlayMode] = useState(false);
   const [locations, setLocations] = useState<Array<ILocation>>([]);
+  const resetHistory = () => {
+    setLocations([]);
+  };
   let _watchId: number;
   useEffect(() => {
-    console.log('playMode', playMode);
-
     if (playMode) {
       _watchId = Geolocation.watchPosition(
         (position) => {
           const {latitude, longitude} = position.coords;
-          console.log('playMode', playMode);
           setLocations([...locations, {latitude, longitude}]);
         },
         (error) => {
@@ -70,12 +57,9 @@ export const MapScreen: React.FC<IProps> = ({route}) => {
     };
   }, [locations, playMode, coordinates]);
 
-  // console.log('locations', locations);
-  // console.log('coordinates', coordinates);
-  console.log('itinerary', itinerary);
-
   return (
     <View style={{flex: 1}}>
+      <Header goBack />
       {coordinates && (
         <MapView
           style={{flex: 1}}
@@ -116,14 +100,16 @@ export const MapScreen: React.FC<IProps> = ({route}) => {
       )}
       {!itinerary && (
         <View style={styles.buttonContainer}>
-          <SaveTrack locations={locations} />
-          <Button title="Сбросить" onPress={() => setLocations([])} />
+          <View style={{flexDirection: 'row', justifyContent: 'center'}}>
+            <Button small title="Сбросить" onPress={resetHistory} />
+            <SaveTrack locations={locations} />
+          </View>
+
           {playMode ? (
             <StopTrekking setPlayMode={setPlayMode} watchId={_watchId} />
           ) : (
             <StartTrekking setPlayMode={setPlayMode} />
           )}
-          {/* <Shared /> */}
         </View>
       )}
     </View>
