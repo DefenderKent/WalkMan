@@ -31,6 +31,16 @@ export const user: Reducer<userReducer, profileAction> = (
           history: [...state.user.history, action.history],
         },
       };
+    case 'DEL_HISTORY':
+      return {
+        ...state,
+        user: {
+          ...state.user,
+          history: state.user.history.filter(
+            (state, index) => index !== action.id,
+          ),
+        },
+      };
     case 'USER_IS_LOADING':
       return {
         ...state,

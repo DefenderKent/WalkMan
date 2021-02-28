@@ -3,7 +3,7 @@ import {Pressable, View, Text} from 'react-native';
 
 import {styles} from './style';
 interface ShareButtonProps {
-  title: string;
+  title?: string;
   Icon?: React.ReactElement;
   onPress: () => void;
 }

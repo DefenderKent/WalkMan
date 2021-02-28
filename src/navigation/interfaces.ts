@@ -6,7 +6,7 @@ import {
 import {StackNavigationProp} from '@react-navigation/stack';
 import {BottomTabNavigationProp} from '@react-navigation/bottom-tabs';
 import {NavigationPages, TabPages} from './pages';
-import {ILocation} from '../store/types';
+import {IAdress, ILocation} from '../store/types';
 
 export type RootStackParamList = {
   [NavigationPages.home]: undefined;
@@ -15,7 +15,7 @@ export type RootStackParamList = {
   [NavigationPages.profileStack]: undefined;
   [NavigationPages.historyScreen]: undefined;
   [NavigationPages.historyStack]: undefined;
-  [NavigationPages.map]: {item?: ILocation[]};
+  [NavigationPages.map]: {item?: IAdress[]};
 };
 export type IRootNavigation<P extends NavigationPages> = StackNavigationProp<
   RootStackParamList,

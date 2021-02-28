@@ -1,7 +1,7 @@
 import {Action} from 'redux';
 import {ThunkAction} from 'redux-thunk';
 
-import {appReducers} from './app/reducers';
+import appReducers from './app/reducers';
 
 export type RootState = ReturnType<typeof appReducers>;
 export interface IAction {
@@ -18,11 +18,15 @@ export interface Account {
   name: string;
   email: string;
   address: string;
-  history: Array<Array<ILocation>>;
+  history: Array<IAdress>;
 }
 export interface ILocation {
   latitude: number;
   longitude: number;
+}
+export interface IAdress {
+  name: string;
+  history: ILocation[];
 }
 export type AppThunk<ReturnType = void> = ThunkAction<
   ReturnType,

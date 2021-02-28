@@ -72,7 +72,7 @@ export const MapScreen: React.FC<IProps> = ({route}) => {
 
   // console.log('locations', locations);
   // console.log('coordinates', coordinates);
-  // console.log('itinerary', itinerary);
+  console.log('itinerary', itinerary);
 
   return (
     <View style={{flex: 1}}>
@@ -107,23 +107,25 @@ export const MapScreen: React.FC<IProps> = ({route}) => {
           )}
           {itinerary && (
             <Polyline
-              coordinates={itinerary}
+              coordinates={itinerary.history}
               strokeColor={'#008500'}
               strokeWidth={6}
             />
           )}
         </MapView>
       )}
-      <View style={styles.buttonContainer}>
-        <SaveTrack locations={locations} />
-        <Button title="Сбросить" onPress={() => setLocations([])} />
-        {playMode ? (
-          <StopTrekking setPlayMode={setPlayMode} watchId={_watchId} />
-        ) : (
-          <StartTrekking setPlayMode={setPlayMode} />
-        )}
-        {/* <Shared /> */}
-      </View>
+      {!itinerary && (
+        <View style={styles.buttonContainer}>
+          <SaveTrack locations={locations} />
+          <Button title="Сбросить" onPress={() => setLocations([])} />
+          {playMode ? (
+            <StopTrekking setPlayMode={setPlayMode} watchId={_watchId} />
+          ) : (
+            <StartTrekking setPlayMode={setPlayMode} />
+          )}
+          {/* <Shared /> */}
+        </View>
+      )}
     </View>
   );
 };

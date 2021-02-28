@@ -3,7 +3,7 @@ import {Alert} from 'react-native';
 import {getAddressFromCoordinates} from '../../../api';
 import {storageKeys} from '../../../constants';
 
-import {Account, AppThunk, ILocation} from '../../types';
+import {Account, AppThunk, IAdress, ILocation} from '../../types';
 
 export function receiveUser(user: Account) {
   return <const>{
@@ -11,10 +11,15 @@ export function receiveUser(user: Account) {
     user,
   };
 }
-export const myHistory = (history: ILocation[]) =>
+export const myHistory = (history: IAdress) =>
   <const>{
     type: 'UPDATE_MY_HISTORY',
     history,
+  };
+export const delHistory = (id: number) =>
+  <const>{
+    type: 'DEL_HISTORY',
+    id,
   };
 export function userIsLoading(isLoading: boolean) {
   return <const>{
@@ -32,7 +37,7 @@ export const fetchUser = (): AppThunk => async (dispatch) => {
         name: 'Bob',
         email: 'bob@mqail.ru',
         address: 'testandress',
-        history: [[{latitude: 0, longitude: 0}]],
+        history: [],
       }),
     );
   } catch (error) {
@@ -45,11 +50,18 @@ export const addMyHistory = (history: Array<ILocation>): AppThunk => async (
   dispatch,
 ) => {
   try {
+    console.log('addMyhistory', history);
+
     const res = await getAddressFromCoordinates(history[0]);
     const data = await res.json();
     console.log('data', data.Response.View[0].Result[0].Location.Address.Label);
 
-    dispatch(myHistory(history));
+    dispatch(
+      myHistory({
+        name: data.Response.View[0].Result[0].Location.Address.Label,
+        history,
+      }),
+    );
   } catch (error) {
     Alert.alert('addMyHistory', error.message);
   }

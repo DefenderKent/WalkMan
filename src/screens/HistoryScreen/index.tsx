@@ -10,12 +10,13 @@ import {
   Pressable,
   Alert,
 } from 'react-native';
-import {useSelector} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {Button} from '../../components';
 import {storageKeys} from '../../constants/storageKeys';
 
 import {IRootRoute, RootStackParamList} from '../../navigation/interfaces';
 import {NavigationPages} from '../../navigation/pages';
+import {delHistory} from '../../store/profile/actions';
 import {RootState} from '../../store/types';
 import {styles} from './style';
 
@@ -26,19 +27,16 @@ interface IProps {
 export const HistoryScreen: React.FC<IProps> = ({route}) => {
   const resetHistory = async () => {
     try {
-      await AsyncStorage.removeItem(storageKeys.myHistory);
+      console.log('22');
     } catch (error) {
       Alert.alert('t.error', error.message);
     }
   };
-  const [StoregeHistory, setHistory] = useState();
   const history = useSelector(
     (state: RootState) => state.profile.user.user.history,
   );
-  // const historyR = ['asdasdasd', 'asdasdas'];
-
   const {navigate} = useNavigation();
-
+  const dispatch = useDispatch();
   useEffect(() => {
     // getData();
   }, [history]);
@@ -46,36 +44,41 @@ export const HistoryScreen: React.FC<IProps> = ({route}) => {
 
   return (
     <SafeAreaView style={{flex: 1}}>
-      <Button title="dell" onPress={resetHistory} />
-      <View>
-        <FlatList
-          keyExtractor={(item) => `history-${item.length}`}
-          data={history}
-          renderItem={({item, index}) => {
-            return (
-              <Pressable
-                onPress={() => {
-                  console.log('1');
-                }}
-                key={index}>
-                <Text>{`Маршрут №${index + 1}`}</Text>
+      {history.length ? (
+        <View>
+          <FlatList
+            keyExtractor={(item, index) => `history-${item.name}-${index}`}
+            data={history}
+            renderItem={({item, index}) => {
+              return (
                 <View>
-                  <View>
-                    <Text>Начало</Text>
-                    <Text>latitude: {item[0].latitude}</Text>
-                    <Text>longitude: {item[0].longitude}</Text>
-                  </View>
-                  <View>
-                    <Text>конец</Text>
-                    <Text>latitude: {item[item.length - 1].latitude}</Text>
-                    <Text>longitude: {item[item.length - 1].longitude}</Text>
-                  </View>
+                  <Pressable
+                    onPress={() => {
+                      navigate(NavigationPages.map, {item});
+                    }}
+                    key={index}>
+                    <Text>{`Маршрут №${index + 1}`}</Text>
+                    <View>
+                      <View>
+                        <Text>Название</Text>
+                        <Text>{item.name}</Text>
+                      </View>
+                    </View>
+                  </Pressable>
+                  <Button
+                    title="Удалить"
+                    onPress={() => {
+                      dispatch(delHistory(index));
+                    }}
+                  />
                 </View>
-              </Pressable>
-            );
-          }}
-        />
-      </View>
+              );
+            }}
+          />
+        </View>
+      ) : (
+        <Text>Empty</Text>
+      )}
     </SafeAreaView>
   );
 };
