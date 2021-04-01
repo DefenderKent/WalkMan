@@ -12,8 +12,6 @@ export const ProfileStack = () => {
       screenOptions={{
         cardStyle: {backgroundColor: '#fff'},
         header: () => null,
-        headerTitle: 'AboutScreen',
-        headerTitleAlign: 'center',
       }}>
       <Stack.Screen
         name={NavigationPages.profileScreen}

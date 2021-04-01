@@ -13,8 +13,6 @@ export const FriendStack = () => {
       screenOptions={{
         cardStyle: {backgroundColor: '#fff'},
         header: () => null,
-        headerTitle: 'AboutScreen',
-        headerTitleAlign: 'center',
       }}>
       <Stack.Screen
         name={NavigationPages.friendScreen}
