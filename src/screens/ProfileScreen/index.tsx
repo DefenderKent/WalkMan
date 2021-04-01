@@ -1,5 +1,4 @@
 import {useNavigation} from '@react-navigation/native';
-import {StackNavigationProp} from '@react-navigation/stack';
 import React from 'react';
 import {SafeAreaView, View, Text, FlatList} from 'react-native';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
@@ -7,7 +6,6 @@ import {useSelector} from 'react-redux';
 
 import {AvatarBody, Header, RenderItem} from '../../components';
 import {textApp} from '../../constants';
-import {IRootRoute, RootStackParamList} from '../../navigation/interfaces';
 import {NavigationPages} from '../../navigation/pages';
 import {RootState} from '../../store/types';
 import {Colors, COMMON_STYLES} from '../../style';
@@ -17,8 +15,6 @@ export const ProfileScreen: React.FC = ({}) => {
     (state: RootState) => state.profile.user.user,
   );
   const {navigate} = useNavigation();
-  console.log('exportHistory', exportHistory);
-
   return (
     <SafeAreaView
       style={[COMMON_STYLES.componentContainer, COMMON_STYLES.screenContainer]}>

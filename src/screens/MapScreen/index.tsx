@@ -63,10 +63,13 @@ export const MapScreen: React.FC<IProps> = ({route}) => {
       {coordinates && (
         <MapView
           style={{flex: 1}}
-          minZoomLevel={15}
           initialRegion={{
-            latitude: coordinates.latitude,
-            longitude: coordinates.longitude,
+            latitude: itinerary
+              ? itinerary.history[0].latitude
+              : coordinates.latitude,
+            longitude: itinerary
+              ? itinerary.history[0].longitude
+              : coordinates.longitude,
             latitudeDelta: 0.0922,
             longitudeDelta: 0.0421,
           }}>
